@@ -1,0 +1,36 @@
+# Source files — only dist/ is needed at runtime
+src/**
+tsconfig.json
+esbuild.js
+
+# Package manager files
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Documentation
+prd.md
+*.md
+!README.md
+
+# VS Code dev config
+.vscode/**
+
+# Root node_modules — native deps are in dist/node_modules/
+node_modules/**
+
+# Source maps (production build has none; belt-and-suspenders)
+dist/**/*.map
+
+# ── better-sqlite3 size reduction ──────────────────────────────────────────
+# Keep only the compiled build output; exclude source, docs, tests, and
+# prebuilt binaries for other platforms (we compile for Electron at package time)
+dist/node_modules/better-sqlite3/deps/**
+dist/node_modules/better-sqlite3/src/**
+dist/node_modules/better-sqlite3/test/**
+dist/node_modules/better-sqlite3/docs/**
+dist/node_modules/better-sqlite3/benchmark/**
+dist/node_modules/better-sqlite3/prebuilds/darwin-*
+dist/node_modules/better-sqlite3/prebuilds/win32-*
+
+# The VSIX itself
+*.vsix

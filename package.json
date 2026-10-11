@@ -1,0 +1,137 @@
+{
+  "name": "cofty",
+  "displayName": "Cofty",
+  "description": "Cofty — Track your code time. Kept on your machine.",
+  "version": "0.1.0",
+  "publisher": "cofty",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cofty/cofty"
+  },
+  "bugs": {
+    "url": "https://github.com/cofty/cofty/issues"
+  },
+  "homepage": "https://github.com/cofty/cofty#readme",
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "time tracking",
+    "productivity",
+    "privacy",
+    "coding metrics",
+    "local"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cofty.openDashboard",
+        "title": "Cofty: Open Dashboard",
+        "category": "Cofty"
+      },
+      {
+        "command": "cofty.toggleTracking",
+        "title": "Cofty: Toggle Tracking",
+        "category": "Cofty"
+      },
+      {
+        "command": "cofty.exportData",
+        "title": "Cofty: Export Data (JSON / CSV)",
+        "category": "Cofty"
+      },
+      {
+        "command": "cofty.viewStatus",
+        "title": "Cofty: View Today's Summary",
+        "category": "Cofty"
+      },
+      {
+        "command": "cofty.purgeData",
+        "title": "Cofty: Purge Old Data",
+        "category": "Cofty"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "cofty.openDashboard",
+        "key": "ctrl+shift+y",
+        "mac": "cmd+shift+y",
+        "when": "editorTextFocus || !editorFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Cofty",
+      "properties": {
+        "cofty.idleTimeoutSeconds": {
+          "type": "number",
+          "default": 120,
+          "minimum": 30,
+          "maximum": 600,
+          "description": "Seconds of inactivity before switching to Idle state."
+        },
+        "cofty.breakReminderMinutes": {
+          "type": "number",
+          "default": 90,
+          "description": "Alert after this many continuous active coding minutes. Set 0 to disable."
+        },
+        "cofty.dataPurgeDays": {
+          "type": "number",
+          "default": 90,
+          "enum": [
+            30,
+            90,
+            180,
+            365,
+            0
+          ],
+          "enumDescriptions": [
+            "30 days",
+            "90 days",
+            "180 days",
+            "365 days",
+            "Never purge"
+          ],
+          "description": "Auto-purge records older than N days. 0 = never."
+        },
+        "cofty.trackingEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable Cofty activity tracking."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "node esbuild.js --production",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "test": "node --import tsx --test src/test/cofty.test.ts",
+    "package": "vsce package --no-dependencies",
+    "install:native": "electron-rebuild --version 42.7.0 --module-dir ."
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.2.1",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^20.19.43",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@types/vscode": "^1.140.0",
+    "@vscode/vsce": "^2.32.0",
+    "esbuild": "^0.20.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.15.4"
+  }
+}
